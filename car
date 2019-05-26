@@ -1,0 +1,173 @@
+#include <SoftwareSerial.h>//宣告內建函數庫     
+
+SoftwareSerial BT(6,7); //藍牙模組TX接到ARDUINO板子第6腳位，RX接到ARDUINO板子第7腳   
+
+int leftMotorIn1 = 3;//輸出馬達腳位   
+
+int leftMotorIn2 = 2;//輸出馬達腳位   
+
+int rightMotorIn3 = 5;//輸出馬達腳位         
+
+int rightMotorIn4 = 4;//輸出馬達腳位   
+
+char input;   
+
+void setup()     
+
+{   
+
+  pinMode(leftMotorIn1, OUTPUT);//設定leftMotorIn1腳位位輸出即腳位3   
+
+  pinMode(leftMotorIn2, OUTPUT);//設定leftMotorIn1腳位位輸出即腳位2   
+
+  pinMode(rightMotorIn3, OUTPUT);//設定leftMotorIn1腳位位輸出即腳位5   
+
+  pinMode(rightMotorIn4, OUTPUT);//設定leftMotorIn1腳位位輸出即腳位4   
+
+  Serial.begin(9600); //Arduino起始鮑率：9600   
+
+  BT.begin(57600); //S2A讀取57600，藍牙鮑率：57600 注意！每個藍牙晶片的鮑率都不太一樣，請務必確認   
+
+}   
+
+   
+
+void loop(){   
+
+  if(BT.available() > 0)  //判斷藍牙有沒有訊息進來，有就執行下面判斷   
+
+  {   
+
+            input=((char)BT.read());//讀取藍牙一個字元進來並存到input變數   
+
+            if( input == 'w' ) //比對藍牙信息w，當收到時候執行車子前進   
+
+            {   
+
+              forward(); //前進副函數      
+
+            }      
+
+            if( input == 's' )//比對藍牙信息當s，收到時候執行車子後退   
+
+             {   
+
+              backward();//後退副函數   
+
+            }       
+
+            if( input == 'a' ) //比對藍牙信息當a，收到時候執行車子左轉   
+
+            {         
+
+              left();//左轉副函數   
+
+            }         
+
+            if( input == 'd' )//比對藍牙信息當d，收到時候執行車子右轉   
+
+             {         
+
+              right();//右轉副函數   
+
+            }      
+
+            if( input == 'b' )//比對藍牙信息當b，收到時候執行車子停止    
+
+            {      
+
+              motorstop();//停止副函數   
+
+            }   
+
+  }       
+
+}   
+
+   
+
+void motorstop()   
+
+{   
+
+  digitalWrite(leftMotorIn1, LOW);   
+
+  digitalWrite(leftMotorIn2, LOW);   
+
+  digitalWrite(rightMotorIn3, LOW);   
+
+  digitalWrite(rightMotorIn4, LOW);   
+
+}   
+
+   
+
+void forward()   
+
+{   
+
+  digitalWrite(leftMotorIn1, LOW);   
+
+    digitalWrite(leftMotorIn2, HIGH);   
+
+    digitalWrite(rightMotorIn3, HIGH);   
+
+    digitalWrite(rightMotorIn4, LOW);   
+
+    
+
+}   
+
+   
+
+void backward()   
+
+{   
+
+   digitalWrite(leftMotorIn1, HIGH);   
+
+    digitalWrite(leftMotorIn2, LOW);   
+
+    digitalWrite(rightMotorIn3, LOW);   
+
+    digitalWrite(rightMotorIn4, HIGH);   
+
+    
+
+}   
+
+   
+
+void right()   
+
+{   
+
+    digitalWrite(leftMotorIn1, HIGH);   
+
+  digitalWrite(leftMotorIn2, LOW);   
+
+  digitalWrite(rightMotorIn3, HIGH);   
+
+  digitalWrite(rightMotorIn4, LOW);   
+
+      
+
+}   
+
+   
+
+void left()   
+
+{   
+
+    digitalWrite(leftMotorIn1, LOW);   
+
+  digitalWrite(leftMotorIn2, HIGH);   
+
+  digitalWrite(rightMotorIn3, LOW);   
+
+  digitalWrite(rightMotorIn4, HIGH);   
+
+    
+
+    

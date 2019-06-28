@@ -146,9 +146,9 @@ void right()
 
   digitalWrite(leftMotorIn2, LOW);   
 
-  digitalWrite(rightMotorIn3, HIGH);   
-
-  digitalWrite(rightMotorIn4, LOW);   
+  digitalWrite（rightMotorIn3，HIGH）;   
+}
+  digitalWrite（rightMotorIn4，LOW）;   
 
       
 
